@@ -1,0 +1,80 @@
+<mat-toolbar  color="primary">
+    <mat-toolbar-row>
+    <h1 style="margin-right: 100px;">Medical Application</h1>
+
+    <button mat-button routerLink='/home' style="font-size: 20px;">AddCustomer</button>
+    <button mat-button style="font-size: 20px;" routerLink='/product'> AddProduct</button>
+    <span class="spacer"></span>
+
+    <button mat-button routerLink='/login'>Logout</button>    
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div class="row">
+    <div class="col-md-5">
+        <form  style="text-align: center;" autocomplete="off">
+            <mat-form-field appearance="fill">
+                <mat-label>Name of Product</mat-label>
+                <input matInput  [(ngModel)]="Name" name="name" required>
+              </mat-form-field>
+        <br>
+              <mat-form-field appearance="fill">
+                <mat-label>Price</mat-label>
+                <input matInput type="number" [(ngModel)]="Price" name="price" required>
+              </mat-form-field>
+        
+            <br>
+            <button mat-raised-button  (click)="Submit()"  [disabled]="!Name|| !Price ">Submit</button>
+            <button mat-raised-button (click)="clear()" >Clear</button>
+            <button mat-raised-button (click)="updateproduct()" >Update</button>
+        
+              </form>
+    </div>
+    <div class="col-md-7">
+        
+        <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+      </mat-form-field>
+      <table  mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> id </th>
+          <td mat-cell (click)="edit(element)" *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+        <!-- Position Column -->
+        <ng-container matColumnDef="names">
+          <th mat-header-cell *matHeaderCellDef> Names </th>
+          <td mat-cell (click)="edit(element)" *matCellDef="let element"> {{element.names}} </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef> Price </th>
+          <td mat-cell (click)="edit(element)" *matCellDef="let element"> {{element.price}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef > Actions </th>
+          <td mat-cell *matCellDef="let row" >
+               <button (click)="deleteproduct(row)" mat-raised-button >Delete</button> 
+          </td>
+      </ng-container> 
+
+
+      
+       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr> <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>        
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+
+</div>
+  </div>
+  <ngx-spinner></ngx-spinner>
+ 
+
+
+     
